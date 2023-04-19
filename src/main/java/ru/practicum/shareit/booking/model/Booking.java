@@ -22,9 +22,6 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.utils.enums.Status;
 import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 
-/**
- * TODO Sprint add-bookings.
- */
 @Entity
 @Getter
 @Setter

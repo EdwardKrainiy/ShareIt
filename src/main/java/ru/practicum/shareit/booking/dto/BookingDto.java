@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.utils.literal.DtoJsonProperty;
 
-/**
- * TODO Sprint add-bookings.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

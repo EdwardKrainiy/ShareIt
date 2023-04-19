@@ -2,9 +2,6 @@ package ru.practicum.shareit.request.utils.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.item.utils.mapper.ItemMapper;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.model.ItemRequest;
 

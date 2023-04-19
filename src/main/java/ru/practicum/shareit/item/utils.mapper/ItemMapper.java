@@ -2,9 +2,6 @@ package ru.practicum.shareit.item.utils.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import ru.practicum.shareit.booking.dto.BookingDto;
-import ru.practicum.shareit.booking.model.Booking;
-import ru.practicum.shareit.booking.utils.mapper.BookingMapper;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 
