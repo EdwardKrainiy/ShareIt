@@ -25,8 +25,8 @@ public class JpaMappingDetails {
   public static final String PAYLOAD = "payload";
   public static final String STATUS = "status";
   public static final String CREATED_ID = "created_id";
-  public static final String START = "start";
-  public static final String END = "end";
+  public static final String START = "startDate";
+  public static final String END = "endDate";
   public static final String ACCOUNT_ID = "account_id";
   public static final String TRANSACTION_ID = "transaction_id";
   public static final String OPERATION_TYPE = "operation_type";
@@ -42,6 +42,7 @@ public class JpaMappingDetails {
   public static final String BOOKER_ID = "booker_id";
   public static final String BOOKER = "booker";
   public static final String REQUESTOR = "requestor";
+  public static final String CREATED = "created";
 
   private JpaMappingDetails() {
   }

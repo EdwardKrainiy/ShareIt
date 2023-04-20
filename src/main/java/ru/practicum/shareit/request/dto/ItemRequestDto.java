@@ -20,6 +20,9 @@ public class ItemRequestDto {
   @JsonProperty(DtoJsonProperty.REQUESTOR_ID)
   private Long requestorId;
 
+  @JsonProperty(DtoJsonProperty.CREATED)
+  private String created;
+
   @JsonProperty(DtoJsonProperty.ITEM_ID)
   private Long itemId;
 }

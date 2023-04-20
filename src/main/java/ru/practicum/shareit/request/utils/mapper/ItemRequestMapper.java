@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.utils.DateUtils;
 
 public class ItemRequestMapper {
 
@@ -15,6 +16,7 @@ public class ItemRequestMapper {
         itemRequest.getRequestor() == null ? null : itemRequest.getRequestor().getId());
     itemRequestDto.setItemId(
         itemRequest.getItem() == null ? null : itemRequest.getItem().getId());
+    itemRequestDto.setCreated(DateUtils.localDateTimeToJsonDate(itemRequest.getCreated()));
 
     return itemRequestDto;
   }

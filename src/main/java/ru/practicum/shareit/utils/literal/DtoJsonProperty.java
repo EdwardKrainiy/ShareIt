@@ -25,8 +25,8 @@ public class DtoJsonProperty {
   public static final String OPERATIONS = "Operations";
   public static final String PASSWORD = "Password";
   public static final String EMAIL = "Email";
-  public static final String START = "Start";
-  public static final String END = "End";
+  public static final String START = "StartDate";
+  public static final String END = "EndDate";
   public static final String ITEM_ID = "ItemId";
   public static final String BOOKER_ID = "BookerId";
   public static final String NAME = "Name";
@@ -38,6 +38,7 @@ public class DtoJsonProperty {
   public static final String REQUESTOR_ID = "RequestorId";
   public static final String ITEMS = "Items";
   public static final String REQUESTS = "Requests";
+  public static final String CREATED = "Created";
 
   private DtoJsonProperty() {
   }

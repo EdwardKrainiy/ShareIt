@@ -1,5 +1,6 @@
 package ru.practicum.shareit.request.model;
 
+import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +40,9 @@ public class ItemRequest {
   @JoinColumn(name = JpaMappingDetails.REQUESTOR_ID)
   private User requestor;
 
-  @OneToOne(mappedBy = JpaMappingDetails.REQUEST)
+  @Column(name = JpaMappingDetails.CREATED)
+  private LocalDateTime created;
+
+  @OneToOne(mappedBy = JpaMappingDetails.REQUEST, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
   private Item item;
 }

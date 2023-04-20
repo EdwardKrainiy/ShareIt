@@ -15,10 +15,10 @@ public class BookingDto {
   private Long id;
 
   @JsonProperty(DtoJsonProperty.START)
-  private String start;
+  private String startDate;
 
   @JsonProperty(DtoJsonProperty.END)
-  private String end;
+  private String endDate;
 
   @JsonProperty(DtoJsonProperty.ITEM_ID)
   private Long itemId;

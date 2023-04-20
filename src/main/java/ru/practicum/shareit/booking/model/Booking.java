@@ -36,10 +36,10 @@ public class Booking {
   private Long id;
 
   @Column(name = JpaMappingDetails.START)
-  private LocalDateTime start;
+  private LocalDateTime startDate;
 
   @Column(name = JpaMappingDetails.END)
-  private LocalDateTime end;
+  private LocalDateTime endDate;
 
   @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
   @JoinColumn(name = JpaMappingDetails.ITEM_ID)
