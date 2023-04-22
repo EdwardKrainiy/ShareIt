@@ -40,7 +40,7 @@ public class Item {
   private String description;
 
   @Column(name = JpaMappingDetails.AVAILABLE)
-  private boolean available;
+  private Boolean available;
 
   @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
   @JoinColumn(name = JpaMappingDetails.OWNER_ID)

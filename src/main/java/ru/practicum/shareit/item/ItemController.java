@@ -1,7 +1,5 @@
 package ru.practicum.shareit.item;
 
-import static ch.qos.logback.core.CoreConstants.EMPTY_STRING;
-
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -42,7 +40,7 @@ public class ItemController {
   @Transactional
   @PostMapping
   @ResponseStatus(value = HttpStatus.CREATED)
-  public ResponseEntity<Long> createItem(
+  public ResponseEntity<ItemDto> createItem(
       @RequestBody
       @Valid
       @NotNull
@@ -98,7 +96,7 @@ public class ItemController {
   @GetMapping("/search")
   @ResponseStatus(value = HttpStatus.OK)
   public ResponseEntity<List<ItemDto>> getAllItemsByTextInNameOrDescription(
-      @RequestParam(name = "text", defaultValue = EMPTY_STRING)
+      @RequestParam(name = "text")
       String text) {
     return ResponseEntity.ok(itemService.findAllItemsByTextInNameOrDescription(text));
   }

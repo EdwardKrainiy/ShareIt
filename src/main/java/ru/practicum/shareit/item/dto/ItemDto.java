@@ -21,5 +21,5 @@ public class ItemDto {
   private String description;
 
   @JsonProperty(DtoJsonProperty.AVAILABLE)
-  private boolean available;
+  private Boolean available;
 }

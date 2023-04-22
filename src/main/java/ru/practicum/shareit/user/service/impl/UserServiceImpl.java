@@ -14,6 +14,7 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.service.UserService;
 import ru.practicum.shareit.user.utils.mapper.UserMapper;
+import ru.practicum.shareit.utils.exception.EntityAlreadyExistsException;
 import ru.practicum.shareit.utils.literal.ExceptionMessage;
 import ru.practicum.shareit.utils.literal.LogMessage;
 
@@ -43,13 +44,17 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Long createUser(UserCreateDto userCreateDto) {
-    User user = UserMapper.toUser(userCreateDto);
+  public UserDto createUser(UserCreateDto userCreateDto) {
+    Optional<User> foundUserByEmail = userRepository.findUserByEmail(userCreateDto.getEmail());
 
-    Long createdUserId = userRepository.save(user).getId();
-    log.info(String.format(LogMessage.USER_CREATED_LOG, createdUserId));
+    if (foundUserByEmail.isPresent()) {
+      throw new EntityAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXISTS);
+    }
 
-    return createdUserId;
+    User savedUser = userRepository.save(UserMapper.toUser(userCreateDto));
+
+    log.info(String.format(LogMessage.USER_CREATED_LOG, savedUser.getId()));
+    return UserMapper.toUserDto(savedUser);
   }
 
   @Override
@@ -58,8 +63,18 @@ public class UserServiceImpl implements UserService {
     if (userToUpdateOptional.isPresent()) {
       User userToUpdate = userToUpdateOptional.get();
 
-      userToUpdate.setName(userUpdateDto.getName());
-      userToUpdate.setEmail(userUpdateDto.getEmail());
+      String newEmail = userUpdateDto.getEmail();
+      if (newEmail != null
+          && !newEmail.equals(userToUpdate.getEmail())
+          && userRepository.existsUserByEmail(newEmail)) {
+        log.error(String.format(LogMessage.USER_WITH_EMAIL_EXISTS_LOG, newEmail));
+        throw new EntityAlreadyExistsException(ExceptionMessage.USER_ALREADY_EXISTS);
+      }
+
+      userToUpdate.setName(
+          userUpdateDto.getName() == null ? userToUpdate.getName() : userUpdateDto.getName());
+      userToUpdate.setEmail(
+          userUpdateDto.getEmail() == null ? userToUpdate.getEmail() : userUpdateDto.getEmail());
 
       log.info(String.format(LogMessage.USER_UPDATED_LOG, userId));
       return UserMapper.toUserDto(userRepository.save(userToUpdate));

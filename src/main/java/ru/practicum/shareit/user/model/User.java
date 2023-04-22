@@ -36,7 +36,7 @@ public class User {
   @Column(name = JpaMappingDetails.NAME)
   private String name;
 
-  @Column(name = JpaMappingDetails.EMAIL, unique = true)
+  @Column(name = JpaMappingDetails.EMAIL)
   private String email;
 
   @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = JpaMappingDetails.OWNER)

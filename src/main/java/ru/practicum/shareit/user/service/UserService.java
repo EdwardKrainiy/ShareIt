@@ -30,7 +30,7 @@ public interface UserService {
    *                      into User object, passed some checks and will be saved on DB.
    * @return ResponseEntity<Long> ResponseEntity with HTTP code and id of created user.
    */
-  Long createUser(UserCreateDto userCreateDto);
+  UserDto createUser(UserCreateDto userCreateDto);
 
   /**
    * updateUser method. Updates user by id and userUpdateDto entity.

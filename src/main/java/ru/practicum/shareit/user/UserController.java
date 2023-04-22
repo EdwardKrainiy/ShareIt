@@ -52,7 +52,7 @@ public class UserController {
   @Transactional
   @PostMapping
   @ResponseStatus(value = HttpStatus.CREATED)
-  public ResponseEntity<Long> createUser(
+  public ResponseEntity<UserDto> createUser(
       @RequestBody
       @Valid
       @NotNull

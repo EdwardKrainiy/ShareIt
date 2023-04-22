@@ -15,7 +15,7 @@ public interface ItemService {
    * @param sharerId      Id of user, which creates item.
    * @return ResponseEntity<Long> ResponseEntity with HTTP code and id of created item.
    */
-  Long createItem(ItemCreateDto itemCreateDto, Long sharerId);
+  ItemDto createItem(ItemCreateDto itemCreateDto, Long sharerId);
 
   /**
    * updateItem method. Updates item by id and userUpdateDto entity.
@@ -39,7 +39,7 @@ public interface ItemService {
    * findAllItemsByUserId. Finds all items by owner's id.
    *
    * @param ownerId Id of owner which items we need to get.
-   * @return ResponseEntity<List<ItemDto>> ResponseEntity with HTTP code and found items.
+   * @return ResponseEntity<List < ItemDto>> ResponseEntity with HTTP code and found items.
    */
   List<ItemDto> findAllItemsByOwnerId(Long ownerId);
 
@@ -48,7 +48,7 @@ public interface ItemService {
    * findAllItemsByTextInNameOrDescription. Finds all items with given text in description or name.
    *
    * @param text Text to search for items.
-   * @return ResponseEntity<List<ItemDto>> ResponseEntity with HTTP code and found items.
+   * @return ResponseEntity<List < ItemDto>> ResponseEntity with HTTP code and found items.
    */
   List<ItemDto> findAllItemsByTextInNameOrDescription(String text);
 }
