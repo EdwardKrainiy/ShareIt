@@ -11,6 +11,7 @@ public class ItemRequestMapper {
   public static ItemRequestDto toItemRequestDto(ItemRequest itemRequest) {
     ItemRequestDto itemRequestDto = new ItemRequestDto();
 
+    itemRequestDto.setId(itemRequest.getId());
     itemRequestDto.setDescription(itemRequest.getDescription());
     itemRequestDto.setRequestorId(
         itemRequest.getRequestor() == null ? null : itemRequest.getRequestor().getId());

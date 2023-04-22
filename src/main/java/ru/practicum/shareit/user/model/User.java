@@ -20,9 +20,6 @@ import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 
-/**
- * TODO Sprint add-controllers.
- */
 @Entity
 @Getter
 @Setter
@@ -50,4 +47,11 @@ public class User {
 
   @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = JpaMappingDetails.REQUESTOR)
   private List<ItemRequest> requests;
+
+  public User(Long userId, String name, String email) {
+    User user = new User();
+    user.setId(userId);
+    user.setName(name);
+    user.setEmail(email);
+  }
 }

@@ -11,6 +11,7 @@ public class BookingMapper {
   public static BookingDto toBookingDto(Booking booking) {
     BookingDto bookingDto = new BookingDto();
 
+    bookingDto.setId(booking.getId());
     bookingDto.setStartDate(DateUtils.localDateTimeToJsonDate(booking.getStartDate()));
     bookingDto.setEndDate(DateUtils.localDateTimeToJsonDate(booking.getEndDate()));
     bookingDto.setItemId(booking.getItem() == null ? null : booking.getItem().getId());
