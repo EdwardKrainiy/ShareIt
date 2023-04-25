@@ -5,17 +5,17 @@ import javax.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.shareit.utils.literal.DtoJsonProperty;
+import ru.practicum.shareit.user.utils.literal.UserDtoJsonProperty;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserUpdateDto {
 
-  @JsonProperty(DtoJsonProperty.NAME)
+  @JsonProperty(UserDtoJsonProperty.NAME)
   private String name;
 
-  @JsonProperty(DtoJsonProperty.EMAIL)
+  @JsonProperty(UserDtoJsonProperty.EMAIL)
   @Email
   private String email;
 }

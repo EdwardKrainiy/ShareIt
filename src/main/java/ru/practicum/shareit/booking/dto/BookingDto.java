@@ -4,28 +4,28 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.shareit.utils.literal.DtoJsonProperty;
+import ru.practicum.shareit.booking.utils.literal.BookingDtoJsonProperty;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookingDto {
 
-  @JsonProperty(DtoJsonProperty.ID)
+  @JsonProperty(BookingDtoJsonProperty.ID)
   private Long id;
 
-  @JsonProperty(DtoJsonProperty.START)
+  @JsonProperty(BookingDtoJsonProperty.START)
   private String startDate;
 
-  @JsonProperty(DtoJsonProperty.END)
+  @JsonProperty(BookingDtoJsonProperty.END)
   private String endDate;
 
-  @JsonProperty(DtoJsonProperty.ITEM_ID)
+  @JsonProperty(BookingDtoJsonProperty.ITEM_ID)
   private Long itemId;
 
-  @JsonProperty(DtoJsonProperty.BOOKER_ID)
+  @JsonProperty(BookingDtoJsonProperty.BOOKER_ID)
   private Long bookerId;
 
-  @JsonProperty(DtoJsonProperty.STATUS)
+  @JsonProperty(BookingDtoJsonProperty.STATUS)
   private String status;
 }

@@ -7,28 +7,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
-import ru.practicum.shareit.utils.literal.DtoJsonProperty;
+import ru.practicum.shareit.user.utils.literal.UserDtoJsonProperty;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
 
-  @JsonProperty(DtoJsonProperty.ID)
+  @JsonProperty(UserDtoJsonProperty.ID)
   private Long id;
 
-  @JsonProperty(DtoJsonProperty.NAME)
+  @JsonProperty(UserDtoJsonProperty.NAME)
   private String name;
 
-  @JsonProperty(DtoJsonProperty.EMAIL)
+  @JsonProperty(UserDtoJsonProperty.EMAIL)
   private String email;
 
-  @JsonProperty(DtoJsonProperty.ITEMS)
+  @JsonProperty(UserDtoJsonProperty.ITEMS)
   private List<ItemDto> items;
 
-  @JsonProperty(DtoJsonProperty.BOOKING_ID)
+  @JsonProperty(UserDtoJsonProperty.BOOKING_ID)
   private Long bookingId;
 
-  @JsonProperty(DtoJsonProperty.REQUESTS)
+  @JsonProperty(UserDtoJsonProperty.REQUESTS)
   private List<ItemRequestDto> requests;
 }

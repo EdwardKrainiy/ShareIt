@@ -4,22 +4,22 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.practicum.shareit.utils.literal.DtoJsonProperty;
+import ru.practicum.shareit.item.utils.literal.ItemDtoJsonProperty;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ItemDto {
 
-  @JsonProperty(DtoJsonProperty.ID)
+  @JsonProperty(ItemDtoJsonProperty.ID)
   private Long id;
 
-  @JsonProperty(DtoJsonProperty.NAME)
+  @JsonProperty(ItemDtoJsonProperty.NAME)
   private String name;
 
-  @JsonProperty(DtoJsonProperty.DESCRIPTION)
+  @JsonProperty(ItemDtoJsonProperty.DESCRIPTION)
   private String description;
 
-  @JsonProperty(DtoJsonProperty.AVAILABLE)
+  @JsonProperty(ItemDtoJsonProperty.AVAILABLE)
   private Boolean available;
 }
