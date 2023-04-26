@@ -14,8 +14,8 @@ public class JpaMappingDetails {
   public static final String REQUEST = "request";
   public static final String OWNER = "owner";
   public static final String STATUS = "status";
-  public static final String START = "startDate";
-  public static final String END = "endDate";
+  public static final String START_DATE = "start_date";
+  public static final String END_DATE = "end_date";
   public static final String NAME = "name";
   public static final String DESCRIPTION = "description";
   public static final String EMAIL = "email";

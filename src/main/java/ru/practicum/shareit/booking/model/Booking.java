@@ -35,10 +35,10 @@ public class Booking {
   @Column(name = JpaMappingDetails.ID, nullable = false)
   private Long id;
 
-  @Column(name = JpaMappingDetails.START)
+  @Column(name = JpaMappingDetails.START_DATE)
   private LocalDateTime startDate;
 
-  @Column(name = JpaMappingDetails.END)
+  @Column(name = JpaMappingDetails.END_DATE)
   private LocalDateTime endDate;
 
   @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
