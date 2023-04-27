@@ -13,7 +13,7 @@ public interface ItemService {
    * @param itemCreateDto Item transfer object, which we need to save. This one will be converted
    *                      into Item object, passed some checks and will be saved on DB.
    * @param sharerId      Id of user, which creates item.
-   * @return ResponseEntity<Long> ResponseEntity with HTTP code and id of created item.
+   * @return ItemDto ResponseEntity with HTTP code and created item.
    */
   ItemDto createItem(ItemCreateDto itemCreateDto, Long sharerId);
 

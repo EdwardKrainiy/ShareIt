@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import ru.practicum.shareit.booking.dto.BookingDto;
 import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.item.utils.mapper.ItemMapper;
+import ru.practicum.shareit.user.utils.mapper.UserMapper;
 import ru.practicum.shareit.utils.DateUtils;
 
 public class BookingMapper {
@@ -12,10 +14,14 @@ public class BookingMapper {
     BookingDto bookingDto = new BookingDto();
 
     bookingDto.setId(booking.getId());
-    bookingDto.setStartDate(DateUtils.localDateTimeToJsonDate(booking.getStartDate()));
-    bookingDto.setEndDate(DateUtils.localDateTimeToJsonDate(booking.getEndDate()));
-    bookingDto.setItemId(booking.getItem() == null ? null : booking.getItem().getId());
-    bookingDto.setBookerId(booking.getBooker() == null ? null : booking.getBooker().getId());
+    bookingDto.setStartDate(booking.getStartDate() == null ? null
+        : DateUtils.localDateTimeToJsonDate(booking.getStartDate()));
+    bookingDto.setEndDate(booking.getEndDate() == null ? null
+        : DateUtils.localDateTimeToJsonDate(booking.getEndDate()));
+    bookingDto.setItem(
+        booking.getItem() == null ? null : ItemMapper.toItemDto(booking.getItem()));
+    bookingDto.setBooker(
+        booking.getBooker() == null ? null : UserMapper.toUserDto(booking.getBooker()));
     bookingDto.setStatus(String.valueOf(booking.getStatus()));
 
     return bookingDto;

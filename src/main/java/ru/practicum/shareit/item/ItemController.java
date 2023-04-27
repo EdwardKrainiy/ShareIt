@@ -22,9 +22,8 @@ import ru.practicum.shareit.item.dto.ItemCreateDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemUpdateDto;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.utils.HeaderUtils;
 import ru.practicum.shareit.utils.JsonEntitySerializer;
-import ru.practicum.shareit.utils.literal.ExceptionMessage;
-import ru.practicum.shareit.utils.literal.HttpLiterals;
 import ru.practicum.shareit.utils.literal.LogMessage;
 
 @RestController
@@ -50,9 +49,9 @@ public class ItemController {
       log.debug(String.format(LogMessage.DEBUG_REQUEST_BODY_LOG,
           jsonEntitySerializer.serializeObjectToJson(itemCreateDto)));
     }
-    String sharerId = obtainAndCheckSharerIdParam(request);
+    Long sharerId = HeaderUtils.obtainAndCheckSharerIdParam(request);
     return ResponseEntity.status(HttpStatus.CREATED)
-        .body(itemService.createItem(itemCreateDto, Long.valueOf(sharerId)));
+        .body(itemService.createItem(itemCreateDto, sharerId));
   }
 
   @Transactional
@@ -72,9 +71,9 @@ public class ItemController {
       log.debug(String.format(LogMessage.DEBUG_REQUEST_BODY_LOG,
           jsonEntitySerializer.serializeObjectToJson(itemUpdateDto)));
     }
-    String sharerId = obtainAndCheckSharerIdParam(request);
+    Long sharerId = HeaderUtils.obtainAndCheckSharerIdParam(request);
     return ResponseEntity.status(HttpStatus.OK)
-        .body(itemService.updateItem(itemUpdateDto, itemId, Long.valueOf(sharerId)));
+        .body(itemService.updateItem(itemUpdateDto, itemId, sharerId));
   }
 
   @ResponseStatus(value = HttpStatus.OK)
@@ -89,8 +88,8 @@ public class ItemController {
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
   public ResponseEntity<List<ItemDto>> getAllItemsOfUser(HttpServletRequest request) {
-    String sharerId = obtainAndCheckSharerIdParam(request);
-    return ResponseEntity.ok(itemService.findAllItemsByOwnerId(Long.valueOf(sharerId)));
+    Long sharerId = HeaderUtils.obtainAndCheckSharerIdParam(request);
+    return ResponseEntity.ok(itemService.findAllItemsByOwnerId(sharerId));
   }
 
   @GetMapping("/search")
@@ -99,15 +98,5 @@ public class ItemController {
       @RequestParam(name = "text")
       String text) {
     return ResponseEntity.ok(itemService.findAllItemsByTextInNameOrDescription(text));
-  }
-
-  private String obtainAndCheckSharerIdParam(HttpServletRequest request) {
-    String sharerId = request.getHeader(HttpLiterals.SHARER_USER_ID_HEADER_PARAM);
-
-    if (sharerId == null || sharerId.isEmpty()) {
-      throw new IllegalArgumentException(ExceptionMessage.SHARER_ID_NOT_FOUND);
-    }
-
-    return sharerId;
   }
 }

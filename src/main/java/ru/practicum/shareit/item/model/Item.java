@@ -42,11 +42,11 @@ public class Item {
   @Column(name = JpaMappingDetails.AVAILABLE)
   private Boolean available;
 
-  @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+  @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinColumn(name = JpaMappingDetails.OWNER_ID)
   private User owner;
 
-  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   @JoinColumn(name = JpaMappingDetails.REQUEST_ID)
   private ItemRequest request;
 

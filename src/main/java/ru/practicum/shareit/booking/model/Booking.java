@@ -28,28 +28,28 @@ import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 @Table(name = JpaMappingDetails.BOOKING_TABLE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
+  public class Booking {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = JpaMappingDetails.ID, nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = JpaMappingDetails.ID, nullable = false)
+    private Long id;
 
-  @Column(name = JpaMappingDetails.START_DATE)
-  private LocalDateTime startDate;
+    @Column(name = JpaMappingDetails.START_DATE)
+    private LocalDateTime startDate;
 
-  @Column(name = JpaMappingDetails.END_DATE)
-  private LocalDateTime endDate;
+    @Column(name = JpaMappingDetails.END_DATE)
+    private LocalDateTime endDate;
 
-  @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-  @JoinColumn(name = JpaMappingDetails.ITEM_ID)
-  private Item item;
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = JpaMappingDetails.ITEM_ID)
+    private Item item;
 
-  @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-  @JoinColumn(name = JpaMappingDetails.BOOKER_ID)
-  private User booker;
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = JpaMappingDetails.BOOKER_ID)
+    private User booker;
 
-  @Column(name = JpaMappingDetails.STATUS)
-  @Enumerated(EnumType.STRING)
-  private Status status;
-}
+    @Column(name = JpaMappingDetails.STATUS)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+  }
