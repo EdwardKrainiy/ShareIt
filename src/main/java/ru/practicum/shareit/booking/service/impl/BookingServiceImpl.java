@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking.service.impl;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -23,6 +24,7 @@ import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.utils.DateUtils;
 import ru.practicum.shareit.utils.enums.Status;
+import ru.practicum.shareit.utils.exception.BookingAlreadyApprovedException;
 import ru.practicum.shareit.utils.exception.UnknownStateException;
 import ru.practicum.shareit.utils.literal.ExceptionMessage;
 import ru.practicum.shareit.utils.literal.LogMessage;
@@ -44,7 +46,7 @@ public class BookingServiceImpl implements BookingService {
     Item itemForBooking = itemRepository.findItemById(bookingCreateDto.getItemId())
         .orElseThrow(() -> {
           log.error(String.format(LogMessage.ITEM_NOT_FOUND_LOG, bookingCreateDto.getItemId()));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.ITEM_NOT_FOUND);
+          throw new ResponseStatusException(NOT_FOUND, ExceptionMessage.ITEM_NOT_FOUND);
         });
 
     if (Boolean.FALSE.equals(itemForBooking.getAvailable())) {
@@ -65,12 +67,13 @@ public class BookingServiceImpl implements BookingService {
     Booking foundBooking = bookingRepository.findBookingById(bookingId)
         .orElseThrow(() -> {
           log.error(String.format(LogMessage.BOOKING_NOT_FOUND_LOG, bookingId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-              ExceptionMessage.BOOKING_NOT_FOUND);
+          throw new ResponseStatusException(NOT_FOUND, ExceptionMessage.BOOKING_NOT_FOUND);
         });
 
     if (foundBooking.getStatus() == (approved ? Status.APPROVED : Status.REJECTED)) {
-      return BookingMapper.toBookingDto(foundBooking);
+      log.error(
+          String.format(LogMessage.BOOKING_ALREADY_APPROVED, bookingId));
+      throw new BookingAlreadyApprovedException(ExceptionMessage.BOOKING_ALREADY_APPROVED);
     }
 
     Item itemInBooking = foundBooking.getItem();
@@ -89,7 +92,7 @@ public class BookingServiceImpl implements BookingService {
       log.error(
           String.format(LogMessage.USER_NOT_OWNER_OF_BOOKING_ITEM, ownerId, itemInBooking.getId(),
               bookingId));
-      throw new ResponseStatusException(BAD_REQUEST,
+      throw new ResponseStatusException(NOT_FOUND,
           ExceptionMessage.USER_NOT_OWNER_OF_BOOKING_ITEM);
     }
 
@@ -105,7 +108,7 @@ public class BookingServiceImpl implements BookingService {
             sharerId, sharerId)
         .orElseThrow(() -> {
           log.error(String.format(LogMessage.BOOKING_NOT_FOUND_LOG, bookingId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
+          throw new ResponseStatusException(NOT_FOUND, "Booking not found");
         });
 
     return BookingMapper.toBookingDto(foundBooking);
@@ -208,7 +211,7 @@ public class BookingServiceImpl implements BookingService {
     return userRepository.findUserById(bookerId)
         .orElseThrow(() -> {
           log.error(String.format(LogMessage.USER_NOT_FOUND_LOG, bookerId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.USER_NOT_FOUND);
+          throw new ResponseStatusException(NOT_FOUND, ExceptionMessage.USER_NOT_FOUND);
         });
   }
 }

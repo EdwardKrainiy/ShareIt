@@ -8,6 +8,8 @@ public class LogMessage {
   public static final String UNKNOWN_STATE_LOG = "Unknown state: %s";
   public static final String USER_NOT_OWNER_OF_BOOKING_ITEM =
       "This user is not owner of booking item. Id of requested user: %d, id of requested item: %d, booking id: %d";
+  public static final String BOOKING_ALREADY_APPROVED =
+      "This booking already approved. Id of booking: %d";
   public static final String USER_CREATED_LOG =
       "User created. Id of User: %d";
   public static final String USER_UPDATED_LOG = "User was updated. Id of user: %d";

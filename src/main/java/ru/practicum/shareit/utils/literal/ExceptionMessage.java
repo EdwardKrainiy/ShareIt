@@ -5,6 +5,7 @@ public class ExceptionMessage {
   public static final String USER_NOT_FOUND = "User not found!";
   public static final String UNKNOWN_STATE = "Unknown state: %s";
   public static final String USER_NOT_OWNER_OF_BOOKING_ITEM = "This user is not owner of booking item!";
+  public static final String BOOKING_ALREADY_APPROVED = "This booking is already approved!";
   public static final String SHARER_ID_NOT_FOUND = "Sharer id is not found in header of query.";
   public static final String ITEM_NOT_FOUND = "Item not found!";
   public static final String ITEM_NOT_AVAILABLE = "Item is not available!";
