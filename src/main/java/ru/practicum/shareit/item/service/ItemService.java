@@ -31,9 +31,10 @@ public interface ItemService {
    * findItemById. Finds item by id.
    *
    * @param itemId Id of item we need to find.
+   * @param userId Id of current user.
    * @return ResponseEntity<ItemDto> ResponseEntity with HTTP code and found item entity.
    */
-  ItemDto findItemById(Long itemId);
+  ItemDto findItemById(Long itemId, Long userId);
 
   /**
    * findAllItemsByUserId. Finds all items by owner's id.

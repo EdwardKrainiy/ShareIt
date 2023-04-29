@@ -12,11 +12,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
   Optional<Item> findItemById(Long id);
 
-  Optional<Item> findItemByIdAndAvailable(Long id, boolean isAvailable);
-
   Optional<Item> findItemByIdAndOwner(Long id, User owner);
 
-  List<Item> findItemsByOwner(User owner);
+  List<Item> findItemsByOwnerOrderById(User owner);
 
   List<Item> findItemsByAvailable(boolean available);
 }

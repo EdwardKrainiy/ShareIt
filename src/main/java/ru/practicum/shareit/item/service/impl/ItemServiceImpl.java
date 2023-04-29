@@ -1,22 +1,27 @@
 package ru.practicum.shareit.item.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import ru.practicum.shareit.booking.model.Booking;
+import ru.practicum.shareit.booking.repository.BookingRepository;
+import ru.practicum.shareit.booking.utils.BookingUtils;
 import ru.practicum.shareit.item.dto.ItemCreateDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.dto.ItemUpdateDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.item.service.ItemService;
+import ru.practicum.shareit.item.utils.ItemUtils;
 import ru.practicum.shareit.item.utils.mapper.ItemMapper;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.repository.UserRepository;
+import ru.practicum.shareit.user.utils.UserUtils;
 import ru.practicum.shareit.utils.literal.ExceptionMessage;
 import ru.practicum.shareit.utils.literal.LogMessage;
 
@@ -25,16 +30,14 @@ import ru.practicum.shareit.utils.literal.LogMessage;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-  private final UserRepository userRepository;
+  private final UserUtils userUtils;
+  private final ItemUtils itemUtils;
   private final ItemRepository itemRepository;
+  private final BookingRepository bookingRepository;
 
   @Override
   public ItemDto createItem(ItemCreateDto itemCreateDto, Long sharerId) {
-    User owner = userRepository.findUserById(sharerId)
-        .orElseThrow(() -> {
-          log.error(String.format(LogMessage.USER_NOT_FOUND_LOG, sharerId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.USER_NOT_FOUND);
-        });
+    User owner = userUtils.getCurrentUserOrException(sharerId);
 
     Item itemToCreate = ItemMapper.toItem(itemCreateDto);
     itemToCreate.setOwner(owner);
@@ -47,16 +50,12 @@ public class ItemServiceImpl implements ItemService {
 
   @Override
   public ItemDto updateItem(ItemUpdateDto itemUpdateDto, Long itemId, Long sharerId) {
-    User owner = userRepository.findUserById(sharerId)
-        .orElseThrow(() -> {
-          log.error(String.format(LogMessage.USER_NOT_FOUND_LOG, sharerId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.USER_NOT_FOUND);
-        });
+    User owner = userUtils.getCurrentUserOrException(sharerId);
 
     Item itemToUpdate = itemRepository.findItemByIdAndOwner(itemId, owner)
         .orElseThrow(() -> {
           log.error(String.format(LogMessage.ITEM_NOT_FOUND_LOG, itemId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.ITEM_NOT_FOUND);
+          throw new EntityNotFoundException(ExceptionMessage.ITEM_NOT_FOUND);
         });
 
     itemToUpdate.setName(
@@ -77,26 +76,42 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
-  public ItemDto findItemById(Long itemId) {
-    Item foundItem = itemRepository.findItemById(itemId)
-        .orElseThrow(() -> {
-          log.error(String.format(LogMessage.ITEM_NOT_FOUND_LOG, itemId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.ITEM_NOT_FOUND);
-        });
+  public ItemDto findItemById(Long itemId, Long userId) {
+    Item foundItem = itemUtils.getItemByIdOrException(itemId);
+
+    User owner = foundItem.getOwner();
+    if (owner == null) {
+      log.error(String.format(LogMessage.OWNER_OF_ITEM_NOT_FOUND, itemId));
+      throw new EntityNotFoundException(ExceptionMessage.OWNER_OF_ITEM_NOT_FOUND);
+    }
+
+    if (owner.getId().equals(userId)) {
+      return getItemsWithNearestBookings(foundItem);
+    }
 
     return ItemMapper.toItemDto(foundItem);
   }
 
   @Override
   public List<ItemDto> findAllItemsByOwnerId(Long ownerId) {
-    User owner = userRepository.findUserById(ownerId)
-        .orElseThrow(() -> {
-          log.error(String.format(LogMessage.USER_NOT_FOUND_LOG, ownerId));
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, ExceptionMessage.USER_NOT_FOUND);
-        });
+    User owner = userUtils.getCurrentUserOrException(ownerId);
 
-    List<Item> foundItemsByOwner = itemRepository.findItemsByOwner(owner);
-    return ItemMapper.toItemDtoList(foundItemsByOwner);
+    List<Item> foundItemsByOwner = itemRepository.findItemsByOwnerOrderById(owner);
+
+    return foundItemsByOwner.stream().map(this::getItemsWithNearestBookings)
+        .collect(Collectors.toList());
+  }
+
+  private ItemDto getItemsWithNearestBookings(Item foundItem) {
+    List<Booking> bookingsByItem = bookingRepository.findBookingsByItem_Id(foundItem.getId());
+
+    Optional<Booking> nearestFutureBooking = BookingUtils.findNearestFutureBooking(
+        bookingsByItem, LocalDateTime.now());
+    Optional<Booking> nearestPastBooking = BookingUtils.findNearestPastBooking(bookingsByItem,
+        LocalDateTime.now());
+
+    return ItemMapper.toItemDtoWithBookings(foundItem, nearestPastBooking.orElse(null),
+        nearestFutureBooking.orElse(null));
   }
 
   @Override

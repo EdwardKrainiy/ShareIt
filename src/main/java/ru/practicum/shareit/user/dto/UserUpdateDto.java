@@ -2,14 +2,12 @@ package ru.practicum.shareit.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Email;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import ru.practicum.shareit.user.utils.literal.UserDtoJsonProperty;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserUpdateDto {
 
   @JsonProperty(UserDtoJsonProperty.NAME)

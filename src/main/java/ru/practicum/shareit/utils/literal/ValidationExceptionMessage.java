@@ -9,6 +9,7 @@ public class ValidationExceptionMessage {
   public static final String DESCRIPTION_IS_EMPTY = "Description is empty!";
   public static final String AVAILABLE_IS_EMPTY = "Available is empty!";
   public static final String EMAIL_IS_EMPTY = "Email is empty!";
+  public static final String TEXT_IS_EMPTY = "Text is empty!";
 
   private ValidationExceptionMessage() {
   }

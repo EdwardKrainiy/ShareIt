@@ -4,6 +4,7 @@ public class JpaMappingDetails {
 
   public static final String BOOKING_TABLE = "bookings";
   public static final String ITEMS_TABLE = "items";
+  public static final String COMMENTS_TABLE = "comments";
   public static final String ITEM_REQUESTS_TABLE = "item_requests";
   public static final String USERS_TABLE = "users";
   public static final String ID = "id";
@@ -19,12 +20,13 @@ public class JpaMappingDetails {
   public static final String NAME = "name";
   public static final String DESCRIPTION = "description";
   public static final String EMAIL = "email";
-  public static final String ITEM = "item";
   public static final String ITEM_ID = "item_id";
   public static final String BOOKER_ID = "booker_id";
-  public static final String BOOKER = "booker";
   public static final String REQUESTOR = "requestor";
   public static final String CREATED = "created";
+  public static final String TEXT = "text";
+  public static final String AUTHOR_NAME = "author_name";
+  public static final String ITEM = "item";
 
   private JpaMappingDetails() {
   }

@@ -13,43 +13,39 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.utils.enums.Status;
 import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = JpaMappingDetails.BOOKING_TABLE)
-@NoArgsConstructor
-@AllArgsConstructor
-  public class Booking {
+@RequiredArgsConstructor
+public class Booking {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = JpaMappingDetails.ID, nullable = false)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = JpaMappingDetails.ID, nullable = false)
+  private Long id;
 
-    @Column(name = JpaMappingDetails.START_DATE)
-    private LocalDateTime startDate;
+  @Column(name = JpaMappingDetails.START_DATE)
+  private LocalDateTime startDate;
 
-    @Column(name = JpaMappingDetails.END_DATE)
-    private LocalDateTime endDate;
+  @Column(name = JpaMappingDetails.END_DATE)
+  private LocalDateTime endDate;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = JpaMappingDetails.ITEM_ID)
-    private Item item;
+  @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @JoinColumn(name = JpaMappingDetails.ITEM_ID)
+  private Item item;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinColumn(name = JpaMappingDetails.BOOKER_ID)
-    private User booker;
+  @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+  @JoinColumn(name = JpaMappingDetails.BOOKER_ID)
+  private User booker;
 
-    @Column(name = JpaMappingDetails.STATUS)
-    @Enumerated(EnumType.STRING)
-    private Status status;
-  }
+  @Column(name = JpaMappingDetails.STATUS)
+  @Enumerated(EnumType.STRING)
+  private Status status;
+}

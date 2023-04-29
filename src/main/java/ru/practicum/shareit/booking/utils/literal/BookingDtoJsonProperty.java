@@ -3,6 +3,7 @@ package ru.practicum.shareit.booking.utils.literal;
 public class BookingDtoJsonProperty {
 
   public static final String ID = "id";
+  public static final String BOOKER_ID = "bookerId";
   public static final String STATUS = "status";
   public static final String START = "start";
   public static final String END = "end";

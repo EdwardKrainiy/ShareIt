@@ -14,15 +14,15 @@ public class DateUtils {
   }
 
   public static boolean isDateAfterPresentAndStartDateLessThanEndDate(LocalDateTime startDate,
-      LocalDateTime endDate, LocalDateTime nowDate) {
+      LocalDateTime endDate) {
     return !startDate.isAfter(endDate)
-        && (startDate.isAfter(nowDate) || startDate.isEqual(nowDate))
+        && (startDate.isAfter(getNowLocalDateTime()) || startDate.isEqual(getNowLocalDateTime()))
         && !startDate.isEqual(endDate);
   }
 
   public static boolean isCurrentDateInRange(LocalDateTime startDate, LocalDateTime endDate) {
     LocalDateTime currentDate = LocalDateTime.now();
-    return !currentDate.isBefore(startDate) && !currentDate.isAfter(endDate);
+    return currentDate.isAfter(startDate) && currentDate.isBefore(endDate);
   }
 
   public static LocalDateTime getNowLocalDateTime() {

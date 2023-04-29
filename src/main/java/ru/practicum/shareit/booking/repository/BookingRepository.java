@@ -20,6 +20,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
   List<Booking> findBookingsByBooker(User booker);
 
+  List<Booking> findBookingsByBooker_IdAndItem_Id(Long bookerId, Long itemId);
+
+  List<Booking> findBookingsByItem_Id(Long itemId);
+
   @Query("SELECT b FROM Booking b JOIN b.item i JOIN i.owner o WHERE o.id = :userId")
   List<Booking> findAllBookingsForCurrentUser(@Param("userId") Long userId);
 }

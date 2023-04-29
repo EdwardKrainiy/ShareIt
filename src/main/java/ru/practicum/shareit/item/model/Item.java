@@ -1,5 +1,6 @@
 package ru.practicum.shareit.item.model;
 
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,23 +10,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import ru.practicum.shareit.booking.model.Booking;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = JpaMappingDetails.ITEMS_TABLE)
-@NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Item {
 
   @Id
@@ -50,6 +47,7 @@ public class Item {
   @JoinColumn(name = JpaMappingDetails.REQUEST_ID)
   private ItemRequest request;
 
-  @OneToOne(mappedBy = JpaMappingDetails.ITEM)
-  private Booking booking;
+  @OneToMany(mappedBy = JpaMappingDetails.ITEM, cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comment> comments;
+
 }

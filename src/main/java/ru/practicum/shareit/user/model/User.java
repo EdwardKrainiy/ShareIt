@@ -9,19 +9,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.utils.literal.JpaMappingDetails;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = JpaMappingDetails.USERS_TABLE)
 @RequiredArgsConstructor
 public class User {
@@ -39,9 +35,6 @@ public class User {
 
   @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = JpaMappingDetails.OWNER)
   private List<Item> items;
-
-  @OneToOne(mappedBy = JpaMappingDetails.BOOKER)
-  private Booking booking;
 
   @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.LAZY, mappedBy = JpaMappingDetails.REQUESTOR)
   private List<ItemRequest> requests;

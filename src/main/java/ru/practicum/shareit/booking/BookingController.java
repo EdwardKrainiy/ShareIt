@@ -75,7 +75,7 @@ public class BookingController {
 
   @GetMapping("/{bookingId}")
   @ResponseStatus(value = HttpStatus.OK)
-  public ResponseEntity<BookingDto> getBookingByBookingId(
+  public ResponseEntity<BookingDto> getBookingByBookingIdAndState(
       @PathVariable
       @NotNull
       Long bookingId,
@@ -87,7 +87,7 @@ public class BookingController {
 
   @GetMapping()
   @ResponseStatus(value = HttpStatus.OK)
-  public ResponseEntity<List<BookingDto>> getBookingByBookingId(
+  public ResponseEntity<List<BookingDto>> getBookingByBookingIdAndState(
       @RequestParam(defaultValue = State.ALL_STATE)
       String state,
       HttpServletRequest request) {
